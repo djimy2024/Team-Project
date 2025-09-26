@@ -10,7 +10,8 @@ We are working together as a team to learn project setup, GitHub collaboration, 
 ## Group Members
 - Daniel Adetaba Adongo  (Group Leader this week)  
 - Emmanuel Chukwunonso Okoye  
-- Djimy Francillon   
+- Djimy Francillon  
+- Joseph Anucha
 
 ---
 
