@@ -1,16 +1,24 @@
-export default function Home() {
-  const teamMembers: string[] = ["Djimy Francillon", "Emmanuel Chukwunonso Okoye", "Joseph Zereuwa Anucha"];
+"use client";
 
+import Link from "next/link";
+
+export default function DashboardPage() {
+     const teamMembers: string[] = ["Djimy Francillon", "Emmanuel Chukwunonso Okoye", "Joseph Zereuwa Anucha"];
   return (
-    <main className="main">
-      <header>
-        <h1 className="title">🚀 Welcome to Our Group Project</h1>
-        <p className="subtitle">
-          This is the landing page for our Next.js project.
-        </p>
-      </header>
+    <main className="flex flex-col items-center justify-center min-h-screen p-8 bg-gray-50">
+     <p className="text-gray-700">You are now logged in successfully.</p>
+      <h1 className="text-3xl font-bold mb-6">Welcome to the Dashboard 🎉</h1>
 
-      <section>
+      {/* Navigation Buttons */}
+      <nav className="flex gap-4 mb-8">
+      
+         <ul>
+          <li><Link href="/about">About</Link></li>
+          <li><Link href="/contact">Contact</Link></li>
+        </ul>
+      </nav>
+
+<section>
         <h2 className="sectionTitle">👥 Meet Our Team</h2>
         <ul className="list">
           {teamMembers.map((member, index) => (
@@ -19,7 +27,7 @@ export default function Home() {
         </ul>
       </section>
 
-      <section>
+       <section>
         <h2 className="sectionTitle">⚡ Project Features</h2>
         <ul className="list">
           <li>✅ Built with Next.js & TypeScript</li>
@@ -59,7 +67,6 @@ export default function Home() {
     </ul>
   </div>
 </section>
-
 
       <footer className="footer">
         © {new Date().getFullYear()} Our Group — All rights reserved.
