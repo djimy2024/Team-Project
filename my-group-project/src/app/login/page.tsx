@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -18,7 +20,6 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      // If login is successful, take the user to the dashboard
       router.push("/dashboard");
     } else {
       alert("Login failed");
@@ -26,27 +27,39 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl mb-4">Login</h1>
-      <form onSubmit={handleLogin} className="flex flex-col gap-2 w-64">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border p-2 rounded"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 rounded"
-        />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-          Login
-        </button>
-      </form>
+    <main className="login-page">
+      <div className="login-card">
+        <h1>Login</h1>
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <div className="password-field">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Image
+              src={showPassword ? "/images/eye-close.svg" : "/images/eye-opened.png"}
+              alt="Toggle password visibility"
+              width={22}
+              height={22}
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            />
+          </div>
+
+          <button type="submit">Login</button>
+        </form>
+      </div>
     </main>
   );
 }

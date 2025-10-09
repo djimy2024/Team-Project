@@ -2,14 +2,11 @@
 import { neon } from "@neondatabase/serverless";
 
 export default async function AboutPage() {
-  // 1. Konekte ak Neon DB la
   const sql = neon(process.env.DATABASE_URL!);
-
-  // 2. Fè yon query sou tab "team"
   const rows = await sql`SELECT name, role FROM team`;
 
   return (
-    <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
+    <main className="about-page">
       <h1>Meet Our Team</h1>
       <ul>
         {rows.map((row: any, i: number) => (

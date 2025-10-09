@@ -1,10 +1,14 @@
 "use client";
+
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // to navigate automatically
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
@@ -20,53 +24,94 @@ export default function RegisterPage() {
 
     if (res.ok) {
       setMessage("Registration successful! You can login now.");
-      // setTimeout(() => router.push("/login"), 2000);
+      setShowPopup(true); // Montre popup la
     } else {
       setMessage(data.error);
     }
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-8">
-      <h1 className="text-2xl font-bold mb-4">Register</h1>
+    <main className="register-page">
+      <div className="register-card">
+        <h1>Register</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-64">
-        <input
-          placeholder="Name"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          className="border p-2 rounded"
-        />
-        <input
-          placeholder="Email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          className="border p-2 rounded"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          className="border p-2 rounded"
-        />
-        <button type="submit" className="bg-green-500 text-white p-2 rounded hover:bg-green-600 transition">
-          Register
-        </button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <input
+            placeholder="Name"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            required
+          />
+          <input
+            placeholder="Email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            required
+          />
+          <div className="password-field">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              required
+            />
+            <Image
+              src={showPassword ? "/images/eye-close.svg" : "/images/eye-opened.png"}
+              alt="Toggle password visibility"
+              width={22}
+              height={22}
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            />
+          </div>
 
-      <p className="mt-4 text-center">{message}</p>
+          <button type="submit">Register</button>
+        </form>
 
-      {/* Login button next to Register */}
-      <div className="mt-4">
-        <p className="mb-2">Already have an account?</p>
-        <button
-          onClick={() => router.push("/login")}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-        >
-          Login
-        </button>
+        {/* Mesaj erè/siksè anba fòm */}
+        {message && !showPopup && (
+          <p className={message.includes("successful") ? "success" : "error"}>
+            {message}
+          </p>
+        )}
+
+        <div className="mt-4">
+          <p className="mb-2">Already have an account?</p>
+          <button
+            onClick={() => router.push("/login")}
+            className="secondary"
+          >
+            Login
+          </button>
+        </div>
       </div>
+
+      {/* Popup modal */}
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-card">
+            <h2>Success!</h2>
+            <p>{message}</p>
+            <div className="flex gap-2 justify-center mt-4">
+              <button
+                onClick={() => {
+                  setShowPopup(false);
+                  router.push("/login");
+                }}
+              >
+                Go to Login
+              </button>
+              <button
+                onClick={() => setShowPopup(false)}
+                style={{ backgroundColor: "#dc2626" }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
