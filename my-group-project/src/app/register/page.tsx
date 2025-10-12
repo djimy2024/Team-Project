@@ -24,7 +24,7 @@ export default function RegisterPage() {
 
     if (res.ok) {
       setMessage("Registration successful! You can login now.");
-      setShowPopup(true); // Montre popup la
+      setShowPopup(true); // Show the popup
     } else {
       setMessage(data.error);
     }

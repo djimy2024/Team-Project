@@ -1,12 +1,15 @@
 "use client";
+import LogoutButton from "../logout/LogoutButton";
 
 import Link from "next/link";
-
 export default function DashboardPage() {
      const teamMembers: string[] = ["Djimy Francillon", "Emmanuel Chukwunonso Okoye", "Joseph Zereuwa Anucha"];
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-8 bg-gray-50">
-     <p className="text-gray-700">You are now logged in successfully.</p>
+     <p className="text-gray-700">You are now logged in successfully.</p> 
+     <div className="mt-6">
+        <LogoutButton />
+      </div>
       <h1 className="text-3xl font-bold mb-6">Welcome to the Dashboard 🎉</h1>
 
       {/* Navigation Buttons */}

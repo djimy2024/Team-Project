@@ -1,5 +1,6 @@
 // src/app/about/page.tsx
 import { neon } from "@neondatabase/serverless";
+import LogoutButton from "../logout/LogoutButton";
 
 export default async function AboutPage() {
   const sql = neon(process.env.DATABASE_URL!);
@@ -7,6 +8,9 @@ export default async function AboutPage() {
 
   return (
     <main className="about-page">
+       <div className="mt-6">
+        <LogoutButton />
+      </div>
       <h1>Meet Our Team</h1>
       <ul>
         {rows.map((row: any, i: number) => (
